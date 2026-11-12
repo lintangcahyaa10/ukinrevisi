@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Dashboard Guru – LKM Eksplorasi Refleksi</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/guru.css" />
+</head>
+<body class="guru">
+  <!-- Login -->
+  <main id="login-view" class="login" hidden>
+    <form id="login-form" class="identity-card login-card">
+      <p class="eyebrow">Halaman Khusus Guru</p>
+      <h1 class="title">Dashboard <span>LKM Refleksi</span></h1>
+      <p class="subtitle">Masukkan kata sandi guru untuk melihat hasil pekerjaan murid.</p>
+      <label class="field">
+        <span>Kata sandi</span>
+        <input type="password" name="password" autocomplete="current-password" required />
+      </label>
+      <p class="form-error" id="login-error" role="alert"></p>
+      <button class="btn btn-primary btn-lg" id="btn-login" type="submit">Masuk</button>
+      <p class="hint"><a href="/">← Kembali ke halaman murid</a></p>
+    </form>
+  </main>
+
+  <!-- Dashboard -->
+  <div id="dash-view" hidden>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3v26" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/><path d="M5 22 11 9l3 13z" fill="currentColor" opacity=".85"/><path d="M27 22 21 9l-3 13z" fill="currentColor" opacity=".4"/></svg></span>
+          <div><p class="brand-title" style="display:block">Dashboard Guru</p><p class="brand-student">LKM Digital – Eksplorasi Refleksi</p></div>
+        </div>
+        <div class="topbar-right">
+          <span class="save-status" id="sync-status" data-state="idle"><span class="dot"></span><span class="text">Memuat…</span></span>
+          <button class="btn-link" id="btn-refresh" type="button">Muat ulang</button>
+          <button class="btn-link" id="btn-logout" type="button">Keluar</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="dash">
+      <section class="stats" id="stats"></section>
+
+      <section class="card toolbar">
+        <label class="search">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="f-search" type="search" placeholder="Cari nama murid…" aria-label="Cari nama murid" />
+        </label>
+        <select id="f-class" aria-label="Filter kelas"><option value="">Semua kelas</option></select>
+        <select id="f-group" aria-label="Filter kelompok"><option value="">Semua kelompok</option></select>
+        <select id="f-status" aria-label="Filter status">
+          <option value="">Semua status</option>
+          <option value="selesai">Selesai</option>
+          <option value="belum_selesai">Belum selesai</option>
+        </select>
+        <div class="export">
+          <button class="btn btn-ghost" id="btn-csv" type="button">⬇ CSV</button>
+          <button class="btn btn-primary" id="btn-xls" type="button">⬇ Excel</button>
+        </div>
+      </section>
+
+      <section class="card table-card">
+        <div class="table-scroll">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>No</th><th>Nama murid</th><th>Kelas</th><th>Kelompok</th><th>Progres</th><th>Status</th><th>Terakhir disimpan</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="empty" hidden>Belum ada data yang cocok.</p>
+        <p class="tbl-foot" id="tbl-foot"></p>
+      </section>
+    </main>
+  </div>
+
+  <!-- Detail -->
+  <div class="drawer" id="drawer" hidden>
+    <div class="drawer-backdrop" data-close></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="d-name">
+      <header class="drawer-head">
+        <div>
+          <p class="eyebrow" id="d-status"></p>
+          <h2 id="d-name"></h2>
+          <p class="d-meta" id="d-meta"></p>
+        </div>
+        <button class="close" data-close aria-label="Tutup">×</button>
+      </header>
+      <div class="drawer-actions">
+        <button class="btn btn-ghost" id="d-print" type="button">🖨 Cetak / Simpan PDF</button>
+        <button class="btn btn-ghost" id="d-csv" type="button">⬇ CSV murid ini</button>
+        <button class="btn btn-ghost" id="d-doc" type="button">⬇ Dokumen Word</button>
+        <button class="btn-link danger" id="d-delete" type="button">Hapus data</button>
+      </div>
+      <div class="drawer-body" id="d-body"></div>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script type="module" src="/js/guru.js"></script>
+</body>
+</html>
